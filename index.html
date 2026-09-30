@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Us by Choice – Keine Ahnung, was ihr heute macht? Wir schon.</title>
+  <meta name="description" content="Ihr wischt beide für euch durch Date-Ideen. Sagt ihr beide Ja, habt ihr ein Match – und wisst, was ihr heute macht. Mit echten Orten in eurer Stadt, 160 Fragen und einer Challenge jede Woche.">
+  <meta name="theme-color" content="#2A0F18">
+  <meta property="og:title" content="Us by Choice – Keine Ahnung, was ihr heute macht? Wir schon.">
+  <meta property="og:description" content="Die Date-App für zwei: Ihr wischt beide – bei einem Match wisst ihr, was ihr heute macht.">
+  <link rel="preload" href="schrift/Fraunces_900Black_Italic.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="stil.css">
+  <link rel="icon" href="bilder/favicon.png">
+</head>
+<body>
+<!--
+THESIS: Der Besucher erlebt das Match selbst, bevor er liest – zwei Stapel, deiner offen, der deines Schatzes verdeckt; verweigert wird die übliche Hero-Zeile mit Handy-Mockup und Feature-Liste.
+OWN-WORLD: Bordeaux-Grund (#2A0F18) mit Samtverlauf, Karten wie in der App (Verlauf #7A2338→#A83D50, Creme-Titel in Fraunces), Gold #D4A657 nur für Ja, Match-Punkt und die eine Hauptaktion; Rückseite der Partnerkarte trägt das „us.“.
+STORY: Verstehen (jeder wischt allein) → erleben (Match-Moment) → glauben (Fragen, Challenge, Events, Zähler, privat) → handeln (Warteliste, später App Store).
+FIRST VIEWPORT: Oben schmale Leiste mit „us.“ und Warteliste-Knopf; links bzw. oben die Frage in Fraunces 900 kursiv; daneben bzw. darunter die Bühne: deine Karte groß, die Karte deines Schatzes verdeckt, ✕/♥ im Daumenbereich.
+FORM: Match zum Ausprobieren, Platz 2 der eigenen Liste, Seed 26b013d6.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+  <a class="sprung" href="#warteliste">Zur Warteliste springen</a>
+
+  <header class="leiste">
+    <a href="#" class="leiste-marke" aria-label="Us by Choice – nach oben"><img src="bilder/wortmarke.svg" alt="" width="152" height="30"></a>
+    <a href="#warteliste" class="knopf knopf-klein" data-hauptaktion>Auf die Warteliste</a>
+  </header>
+
+  <main>
+    <section class="buehne" aria-labelledby="titel">
+      <div class="buehne-text">
+        <h1 id="titel">Keine Ahnung, was ihr heute macht? <span class="gold-wort">Wir schon<span class="punkt">.</span></span></h1>
+        <p class="lead">Jeder wischt für sich. Sagt ihr beide Ja, ist es ein Match – und der Abend steht. <strong>Probier’s aus:</strong></p>
+      </div>
+
+      <div class="demo" data-demo tabindex="-1" aria-label="Ausprobieren: Date-Ideen wischen">
+        <div class="demo-spalten">
+          <div class="demo-spalte demo-du">
+            <p class="demo-name">Du</p>
+            <div class="stapel" data-stapel>
+              <!-- Karten setzt demo.js; ohne JavaScript steht hier eine Beispielkarte -->
+              <article class="idee" data-karte>
+                <div class="idee-bild" aria-hidden="true"><span class="idee-emoji">🌊</span><span class="idee-ort">Den Haag</span></div>
+                <div class="idee-text">
+                  <h2 class="idee-titel">Sonnenuntergang in Scheveningen</h2>
+                  <p>Am Strand entlang bis zum Pier laufen und zuschauen, wie die Sonne im Meer versinkt.</p>
+                  <p class="schilder"><span>kostenlos</span><span>kurz</span><span>draußen</span></p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="demo-spalte demo-schatz">
+            <p class="demo-name">Dein Schatz</p>
+            <div class="wende" data-wende>
+              <div class="wende-innen">
+                <div class="wende-rueck" aria-hidden="true">
+                  <span class="monogramm">us<span class="punkt">.</span></span>
+                  <span class="wende-hinweis">entscheidet für sich <span class="punkte"><i></i><i></i><i></i></span></span>
+                </div>
+                <div class="wende-vorn" data-schatz-antwort></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-knoepfe">
+          <button type="button" class="rund rund-nein" data-nein aria-label="Nein">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+          <button type="button" class="rund rund-ja" data-ja aria-label="Ja">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg>
+          </button>
+        </div>
+        <p class="demo-fuss">Echte Ideen aus der App (Weimar &amp; Den Haag). Dein Schatz ist hier nur gespielt – in der App entscheidet ihr beide auf dem eigenen Handy.</p>
+
+        <div class="match" data-match hidden>
+          <div class="match-innen" role="dialog" aria-modal="false" aria-labelledby="match-titel">
+            <p class="match-emoji" data-match-emoji aria-hidden="true">🌊</p>
+            <p class="match-zeile" id="match-titel">Ihr wollt beide<span class="match-punkt" aria-hidden="true"></span><span class="nur-vorlesen">.</span></p>
+            <p class="match-idee" data-match-idee>Sonnenuntergang in Scheveningen</p>
+            <p class="match-klein">So fühlt sich ein Match an. In der App seht ihr es beide gleichzeitig.</p>
+            <a href="#warteliste" class="knopf" data-match-warteliste data-hauptaktion>Auf die Warteliste</a>
+            <button type="button" class="leise-knopf" data-weiter>Weiter wischen</button>
+          </div>
+        </div>
+
+        <div class="ende" data-ende hidden>
+          <p class="ende-titel">Das war die Kostprobe<span class="punkt">.</span></p>
+          <p>In der App warten über hundert Ideen – echte Orte in eurer Stadt, passend zu Budget, Zeit und Wetter.</p>
+          <a href="#warteliste" class="knopf" data-hauptaktion>Auf die Warteliste</a>
+          <button type="button" class="leise-knopf" data-nochmal>Nochmal von vorn</button>
+        </div>
+
+        <p class="nur-vorlesen" aria-live="polite" data-ansage></p>
+      </div>
+    </section>
+
+    <section class="warteliste" id="warteliste" aria-labelledby="warteliste-titel">
+      <div class="warteliste-karte">
+        <h2 id="warteliste-titel">Bald im App Store<span class="punkt">.</span></h2>
+        <p class="warteliste-text" data-warteliste-text>Trag dich ein – wir schreiben dir einmal, sobald ihr loslegen könnt. Kein Newsletter, kein Spam.</p>
+        <a class="knopf knopf-store" data-store hidden href="#">Laden im App Store</a>
+        <form class="formular" data-formular novalidate>
+          <div class="feld">
+            <label for="email-1">Deine E-Mail-Adresse</label>
+            <input id="email-1" name="email" type="email" autocomplete="email" inputmode="email" placeholder="du@beispiel.de" required>
+          </div>
+          <div class="feld">
+            <label for="stadt-1">Deine Stadt <span class="leise">(optional)</span></label>
+            <input id="stadt-1" name="stadt" type="text" autocomplete="address-level2" maxlength="60" placeholder="z. B. Weimar">
+          </div>
+          <div class="versteckt" aria-hidden="true"><label for="feld-b-1">Bitte leer lassen</label><input id="feld-b-1" name="feld-b" type="text" tabindex="-1" autocomplete="off"></div>
+          <label class="haken"><input name="einwilligung" type="checkbox"> <span>Ihr dürft mir schreiben, sobald die App startet. Abmelden geht jederzeit. <a href="datenschutz.html">Datenschutz</a></span></label>
+          <button type="submit" class="knopf">Auf die Warteliste</button>
+          <p class="rueckmeldung" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="kapitel" aria-labelledby="kapitel-titel">
+      <h2 id="kapitel-titel" class="kapitel-kopf">Und wenn ihr gerade nicht ausgeht<span class="punkt">.</span></h2>
+
+      <article class="zeile">
+        <figure class="handy"><img src="bilder/app-frage.webp" alt="App-Bildschirm mit einer Frage: Welches Essen verbindest du mit einem richtig guten Gefühl?" width="600" height="1298" loading="lazy"></figure>
+        <div class="zeile-text">
+          <h3>160 Fragen, die euch näherbringen</h3>
+          <p>Vom lockeren Aufwärmen bis „Ganz tief“ – für das Essen, die Autofahrt oder den Abend auf dem Sofa. Merkt euch eure Lieblingsfragen und macht weiter, wo ihr aufgehört habt.</p>
+          <ul class="rubriken" aria-label="Rubriken">
+            <li>Aufwärmen</li><li>Erinnerungen</li><li>Träume &amp; Werte</li><li>Ganz tief</li><li>Kindheit</li><li>Zukunft</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="zeile zeile-gedreht">
+        <div class="challenges" aria-hidden="true">
+          <div class="challenge-karte"><span class="ch-emoji">📵</span><span class="ch-woche">Woche 3</span><span class="ch-titel">Handyfreier Abend</span><span class="ch-text">Ein ganzer Abend ohne Handy – Brettspiel, Kochen oder einfach reden.</span></div>
+          <div class="challenge-karte"><span class="ch-emoji">✉️</span><span class="ch-woche">Woche 2</span><span class="ch-titel">Brief an uns</span><span class="ch-text">Jeder schreibt einen kurzen Brief an euch beide in einem Jahr.</span></div>
+          <div class="challenge-karte ch-oben"><span class="ch-emoji">🍳</span><span class="ch-woche">Diese Woche · noch 6 Tage</span><span class="ch-titel">Fremde Küche</span><span class="ch-text">Kocht zusammen ein Gericht aus einem Land, in dem ihr beide noch nie wart.</span><span class="ch-foto">Foto: euer fertiger Teller</span></div>
+          <span class="ch-serie">🔥 3 Wochen in Folge</span>
+          <p class="beispiel">Beispiel</p>
+        </div>
+        <div class="zeile-text">
+          <h3>Jede Woche eine Challenge</h3>
+          <p>Jeden Montag eine kleine Aufgabe für euch zwei: zusammen kochen, einen Brief verstecken, einen Abend ohne Handy. Ein gemeinsames Foto, und eure Serie wächst – samt Album.</p>
+        </div>
+      </article>
+
+      <article class="zeile">
+        <div class="tickets" aria-hidden="true">
+          <div class="ticket"><span class="ticket-zeit">Sa 24.10. · 20:00</span><span class="ticket-titel">Konzert im Stadtpark</span><span class="ticket-art">Musik</span></div>
+          <div class="ticket"><span class="ticket-zeit">So 25.10. · 14:30</span><span class="ticket-titel">Heimspiel am Nachmittag</span><span class="ticket-art">Fußball</span></div>
+          <div class="ticket"><span class="ticket-zeit">Di 27.10. · 19:30</span><span class="ticket-titel">Impro-Theater</span><span class="ticket-art">Bühne</span></div>
+          <p class="beispiel">Beispiele</p>
+        </div>
+        <div class="zeile-text">
+          <h3>Was bei euch los ist – oder da, wo ihr hinfahrt</h3>
+          <p>Konzerte, Shows und Fußball der nächsten Tage, direkt zum Wischen. Plant ihr eine Reise, zeigt die App, was dort los ist. Gemeinsame Events landen mit einem Tipp im Kalender.</p>
+        </div>
+      </article>
+
+      <article class="zeile zeile-gedreht">
+        <div class="zaehler" aria-hidden="true">
+          <span class="zaehler-klein">Zusammen seit</span>
+          <span class="zaehler-zahl">3&nbsp;Jahren, 7&nbsp;Monaten<br>und 14&nbsp;Tagen</span>
+          <span class="zaehler-meilenstein">In 79 Tagen: 1.400 Tage</span>
+          <p class="beispiel">Beispiel</p>
+        </div>
+        <div class="zeile-text">
+          <h3>Euer Zähler</h3>
+          <p>Wie lange ihr schon zusammen seid – und wann der nächste kleine Jahrestag kommt, den sonst beide vergessen hätten.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="versprechen" aria-labelledby="versprechen-titel">
+      <h2 id="versprechen-titel" class="nur-vorlesen">Nur für euch zwei</h2>
+      <ul>
+        <li class="breit"><strong>Nur ihr zwei.</strong> Verbunden mit einem Code – eure Matches, Fragen und Fotos sieht sonst niemand.</li>
+        <li><strong>Keine Werbung.</strong> Keine Anzeigen, nirgends.</li>
+        <li><strong>Kein Tracking.</strong> Keine Werbe-IDs, kein Weiterverkauf.</li>
+        <li class="breit"><strong>Server in Frankfurt.</strong> Eure Daten bleiben in der EU.</li>
+      </ul>
+    </section>
+
+    <section class="schluss" aria-labelledby="schluss-titel">
+      <h2 id="schluss-titel">Weil ihr euch nicht nur einmal entscheidet&nbsp;– <span class="gold-wort">sondern jeden Tag<span class="punkt">.</span></span></h2>
+      <a href="#warteliste" class="knopf" data-hauptaktion>Auf die Warteliste</a>
+    </section>
+  </main>
+
+  <footer class="fuss">
+    <img src="bilder/wortmarke.svg" alt="Us by Choice" width="122" height="24">
+    <nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+    <p>© 2026 Elias Albrecht · Gemacht in Weimar</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+  <script type="module" src="demo.js"></script>
+</body>
+</html>

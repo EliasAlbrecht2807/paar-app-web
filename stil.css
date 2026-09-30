@@ -1,0 +1,438 @@
+/* Us by Choice – Website. Welt: Bordeaux & Gold, Fraunces aus dem Logo, Karten wie in der App. */
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('schrift/Fraunces_600SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('schrift/Fraunces_900Black_Italic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --grund: #2a0f18;
+  --karte: #3a1522;
+  --chip: #4a1e2b;
+  --rand: #5a2a38;
+  --samt: #7a2338;
+  --samt-hell: #a83d50;
+  --text: #f6e7d8;
+  --leise: #c9b3a6;
+  --gold: #d4a657;
+  --gold-hell: #e6c27f;
+  --auf-gold: #2a0f18;
+  --rot: #e8808e;
+  --anzeige: 'Fraunces', Georgia, serif;
+  --schrift: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --breite: 1120px;
+  --weich: cubic-bezier(0.22, 1, 0.36, 1);
+  --federnd: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--grund);
+  color: var(--text);
+  font-family: var(--schrift);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+html { overflow-x: clip; }
+
+::selection { background: var(--gold); color: var(--auf-gold); }
+
+a { color: var(--gold); text-underline-offset: 3px; }
+a:hover { color: var(--gold-hell); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+
+.nur-vorlesen {
+  position: absolute !important;
+  width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.versteckt { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.sprung {
+  position: absolute; left: 12px; top: -60px; z-index: 50;
+  background: var(--gold); color: var(--auf-gold); padding: 10px 16px; border-radius: 999px; font-weight: 700;
+}
+.sprung:focus { top: 12px; }
+
+.punkt { color: var(--gold); }
+.gold-wort { color: var(--gold); white-space: nowrap; }
+.leise { color: var(--leise); font-weight: 400; }
+
+/* ---------- Knöpfe ---------- */
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 54px; padding: 0 28px;
+  border: 0; border-radius: 999px;
+  background: var(--gold); color: var(--auf-gold);
+  font: 700 17px/1 var(--schrift); text-decoration: none; cursor: pointer;
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.15s var(--weich), box-shadow 0.2s var(--weich), background 0.2s;
+}
+.knopf:hover { color: var(--auf-gold); background: var(--gold-hell); }
+.knopf:active { transform: scale(0.97); }
+.knopf:disabled { opacity: 0.55; cursor: default; }
+.knopf-klein { min-height: 44px; padding: 0 18px; font-size: 15px; box-shadow: none; }
+
+.leise-knopf {
+  min-height: 44px; padding: 0 16px;
+  background: none; border: 0; color: var(--leise);
+  font: 600 15px var(--schrift); cursor: pointer; text-decoration: underline; text-underline-offset: 4px;
+}
+.leise-knopf:hover { color: var(--text); }
+
+/* ---------- Leiste ---------- */
+.leiste {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px max(20px, calc((100% - var(--breite)) / 2 + 20px));
+  background: rgba(42, 15, 24, 0.9);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.leiste-marke img { height: 30px; width: auto; }
+
+/* ---------- Bühne (erster Bildschirm) ---------- */
+.buehne {
+  position: relative;
+  max-width: var(--breite); margin: 0 auto;
+  padding: 8px 20px 56px;
+  display: grid; gap: 22px;
+}
+/* Samtschimmer hinter der Bühne */
+.buehne::before {
+  content: ''; position: absolute; top: -80px; bottom: 0; left: calc(50% - 50vw); right: calc(50% - 50vw); z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 70% 30%, rgba(168, 61, 80, 0.38), transparent 70%),
+    radial-gradient(45% 40% at 15% 10%, rgba(122, 35, 56, 0.55), transparent 70%);
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--anzeige); font-weight: 900; font-style: italic;
+  font-size: clamp(38px, 9.8vw, 78px); line-height: 0.98; letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.lead { margin: 14px 0 0; max-width: 30em; color: var(--leise); font-size: clamp(16px, 2.2vw, 20px); line-height: 1.5; }
+.lead strong { color: var(--text); }
+
+/* ---------- Demo ---------- */
+.demo { position: relative; outline: none; }
+.demo-spalten { display: grid; grid-template-columns: 1fr; position: relative; }
+.demo-name {
+  margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leise);
+}
+.demo-du { position: relative; z-index: 2; }
+.stapel { position: relative; height: 340px; touch-action: pan-y; }
+
+.idee {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--karte); border-radius: 28px; overflow: hidden;
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.7);
+  cursor: grab; user-select: none; -webkit-user-select: none;
+  will-change: transform;
+}
+.idee:active { cursor: grabbing; }
+.idee.hinten { transform: scale(0.94) translateY(14px); opacity: 0.55; pointer-events: none; }
+.idee-bild {
+  flex: 0 0 38%; min-height: 90px;
+  display: flex; align-items: flex-end; gap: 12px; padding: 0 20px 16px;
+  background: linear-gradient(135deg, var(--samt), var(--samt-hell));
+}
+.idee-emoji { font-size: 46px; line-height: 1; }
+.idee-ort { padding-bottom: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); opacity: 0.85; }
+.idee-text { flex: 1 1 auto; padding: 18px 20px 20px; }
+.idee-titel { margin: 0 0 6px; font-family: var(--anzeige); font-weight: 600; font-size: 23px; line-height: 1.15; }
+.idee-text p { margin: 0; color: var(--leise); font-size: 16px; line-height: 1.45; }
+.schilder { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px !important; }
+.schilder span { background: var(--chip); color: var(--gold); font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 999px; }
+
+.stempel {
+  position: absolute; top: 26px; padding: 4px 12px; border: 4px solid; border-radius: 12px;
+  font: 800 28px var(--schrift); letter-spacing: 0.06em; opacity: 0; pointer-events: none;
+}
+.stempel-ja { left: 24px; color: var(--gold); border-color: var(--gold); transform: rotate(-14deg); }
+.stempel-nein { right: 24px; color: var(--rot); border-color: var(--rot); transform: rotate(14deg); }
+
+/* Karte deines Schatzes: verdeckt, dreht sich nach deiner Entscheidung um */
+.demo-schatz { position: absolute; right: -6px; top: 14px; width: 36%; max-width: 150px; z-index: 3; transform: rotate(6deg); }
+.demo-schatz .demo-name { display: none; }
+.wende { perspective: 900px; aspect-ratio: 3 / 4; }
+.wende-innen { position: relative; height: 100%; transform-style: preserve-3d; transition: transform 0.6s var(--weich); }
+.wende.offen .wende-innen { transform: rotateY(180deg); }
+.wende-rueck, .wende-vorn {
+  position: absolute; inset: 0; border-radius: 20px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 12px;
+  box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.75);
+}
+.wende-rueck {
+  background:
+    repeating-linear-gradient(45deg, rgba(246, 231, 216, 0.035) 0 2px, transparent 2px 12px),
+    linear-gradient(160deg, #5a1a2b, #3a1522);
+}
+.monogramm { font-family: var(--anzeige); font-weight: 900; font-style: italic; font-size: 44px; line-height: 1; color: var(--text); }
+.wende-hinweis { font-size: 12px; color: var(--leise); line-height: 1.3; }
+.punkte { display: inline-flex; gap: 3px; vertical-align: middle; }
+.punkte i { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); animation: tippen 1.2s infinite ease-in-out; }
+.punkte i:nth-child(2) { animation-delay: 0.15s; }
+.punkte i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes tippen { 0%, 60%, 100% { opacity: 0.25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+.wende-vorn { transform: rotateY(180deg); background: var(--karte); }
+.wende-vorn.ja { background: linear-gradient(160deg, #3a1522, #4a2a1c); border: 2px solid var(--gold); }
+.wende-vorn.nein { border: 2px solid rgba(232, 128, 142, 0.6); }
+.antwort-zeichen { font-family: var(--anzeige); font-weight: 900; font-style: italic; font-size: 34px; line-height: 1; }
+.wende-vorn.ja .antwort-zeichen { color: var(--gold); }
+.wende-vorn.nein .antwort-zeichen { color: var(--rot); }
+.antwort-text { font-size: 12px; color: var(--leise); line-height: 1.3; }
+
+.demo-knoepfe { display: flex; justify-content: center; gap: 28px; margin-top: 16px; }
+.rund {
+  width: 72px; height: 72px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center;
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.15s var(--weich), background 0.2s;
+}
+.rund svg { width: 30px; height: 30px; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.rund-nein { background: var(--karte); }
+.rund-nein svg { stroke: var(--rot); }
+.rund-ja { background: var(--gold); }
+.rund-ja svg { fill: var(--auf-gold); stroke: var(--auf-gold); stroke-width: 1.5; }
+.rund:hover { transform: translateY(-2px); }
+.rund:active { transform: scale(0.92); }
+.rund:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+.demo-fuss { margin: 16px auto 0; max-width: 32em; text-align: center; font-size: 13px; color: var(--leise); }
+
+/* Match-Moment */
+.match, .ende {
+  position: absolute; inset: -12px -8px; z-index: 10;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  border-radius: 32px;
+  background:
+    radial-gradient(70% 60% at 50% 30%, rgba(168, 61, 80, 0.55), transparent 75%),
+    linear-gradient(180deg, #5c1a2c, #2a0f18 85%);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+}
+.match[hidden], .ende[hidden] { display: none; }
+.match-offen .demo-schatz { visibility: hidden; }
+.match-innen, .ende { padding: 28px 22px; }
+.ende { flex-direction: column; gap: 12px; }
+.match-innen { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.match-emoji { margin: 0; font-size: 72px; line-height: 1.1; }
+.match-zeile, .ende-titel {
+  margin: 0; font-family: var(--anzeige); font-weight: 900; font-style: italic;
+  font-size: clamp(38px, 9vw, 56px); line-height: 1.05; display: inline-flex; align-items: flex-end;
+}
+.match-punkt { display: inline-block; width: 0.2em; height: 0.2em; margin: 0 0 0.2em 0.04em; border-radius: 50%; background: var(--gold); }
+.match-idee { margin: 2px 0 0; font-family: var(--anzeige); font-weight: 600; font-size: 22px; }
+.match-klein, .ende p { margin: 0 0 8px; color: var(--leise); font-size: 15px; max-width: 26em; }
+.ende .knopf, .match .knopf { margin-top: 4px; }
+
+/* ---------- Warteliste ---------- */
+.warteliste { max-width: var(--breite); margin: 0 auto; padding: 24px 20px 72px; scroll-margin-top: 70px; }
+.warteliste-karte {
+  max-width: 620px; margin: 0 auto; padding: 32px 22px;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #43182a, var(--karte) 45%);
+}
+.warteliste h2 { margin: 0; font-family: var(--anzeige); font-weight: 900; font-style: italic; font-size: clamp(34px, 7vw, 48px); line-height: 1.05; }
+.warteliste-text { margin: 10px 0 22px; color: var(--leise); }
+.knopf-store { margin-bottom: 8px; }
+
+.formular { display: grid; gap: 14px; }
+.feld { display: grid; gap: 6px; }
+.formular label { font-size: 15px; font-weight: 600; }
+.formular input[type='email'],
+.formular input[type='text'] {
+  font: inherit; min-height: 52px; padding: 0 16px;
+  border-radius: 16px; border: 1px solid transparent;
+  background: var(--chip); color: var(--text);
+  transition: border-color 0.2s, background 0.2s;
+}
+.formular input:hover { border-color: var(--rand); }
+.formular input:focus-visible { outline: none; border-color: var(--gold); background: #532232; }
+.formular input::placeholder { color: #a8928a; }
+.haken { display: flex; gap: 12px; align-items: flex-start; font-weight: 400 !important; color: var(--leise); font-size: 15px; }
+.haken input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--gold); flex-shrink: 0; }
+.formular .knopf { width: 100%; margin-top: 4px; }
+.rueckmeldung { margin: 0; min-height: 1.5em; font-weight: 600; }
+.rueckmeldung.gut { color: var(--gold); }
+.rueckmeldung.schlecht { color: var(--rot); }
+
+/* ---------- Kapitel ---------- */
+.kapitel { max-width: var(--breite); margin: 0 auto; padding: 40px 20px 24px; }
+.kapitel-kopf {
+  margin: 0 0 40px; font-family: var(--anzeige); font-weight: 900; font-style: italic;
+  font-size: clamp(34px, 7vw, 60px); line-height: 1.02; max-width: 12em; text-wrap: balance;
+}
+.zeile { display: grid; gap: 28px; align-items: center; padding: 36px 0 56px; }
+.zeile-text h3 { margin: 0 0 12px; font-family: var(--anzeige); font-weight: 600; font-size: clamp(26px, 4vw, 36px); line-height: 1.12; }
+.zeile-text p { margin: 0; color: var(--leise); font-size: 18px; max-width: 30em; }
+
+.handy {
+  margin: 0; justify-self: center; width: min(280px, 72vw);
+  padding: 10px; border-radius: 46px;
+  background: linear-gradient(145deg, #1a070d, #0e0407);
+  box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.handy img { width: 100%; height: auto; border-radius: 36px; }
+
+/* Challenge-Karten als Stapel: die aktuelle Woche oben, die vergangenen dahinter */
+.challenges { position: relative; justify-self: center; width: min(320px, 82vw); height: 380px; }
+.challenge-karte {
+  position: absolute; inset: 0 0 auto; display: grid; gap: 8px; align-content: start;
+  padding: 24px 24px 26px; border-radius: 28px; min-height: 300px;
+  background: var(--karte); box-shadow: 0 24px 48px -22px rgba(0, 0, 0, 0.85);
+}
+.challenge-karte:nth-child(1) { transform: translate(-14px, 44px) rotate(-6deg); opacity: 0.5; }
+.challenge-karte:nth-child(2) { transform: translate(12px, 22px) rotate(4deg); opacity: 0.75; }
+.ch-oben { background: linear-gradient(160deg, var(--samt), #4a1a2a 70%); }
+.ch-emoji { font-size: 48px; line-height: 1.1; }
+.ch-woche { color: var(--gold); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; }
+.ch-titel { font-family: var(--anzeige); font-weight: 600; font-size: 26px; line-height: 1.15; }
+.ch-text { color: var(--leise); font-size: 15px; line-height: 1.45; }
+.ch-oben .ch-text { color: var(--text); }
+.ch-foto { justify-self: start; margin-top: 4px; padding: 6px 12px; border-radius: 999px; background: rgba(42, 15, 24, 0.45); font-size: 13px; font-weight: 600; }
+.ch-serie {
+  position: absolute; right: -8px; bottom: 6px; padding: 8px 14px; border-radius: 999px;
+  background: var(--gold); color: var(--auf-gold); font-weight: 800; font-size: 14px;
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.7); transform: rotate(3deg);
+}
+
+.rubriken { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 20px 0 0; }
+.rubriken li { padding: 7px 14px; border-radius: 999px; background: var(--chip); color: var(--gold); font-size: 14px; font-weight: 600; }
+
+.tickets { position: relative; justify-self: center; width: min(340px, 86vw); display: grid; gap: 14px; }
+.ticket {
+  position: relative; display: grid; gap: 4px;
+  padding: 18px 22px 18px 26px; border-radius: 16px;
+  background: var(--karte);
+  box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.8);
+  /* Abreißkante links */
+  -webkit-mask: radial-gradient(circle 9px at 0 50%, transparent 98%, #000) ;
+          mask: radial-gradient(circle 9px at 0 50%, transparent 98%, #000);
+}
+.ticket:nth-child(2) { transform: translateX(22px) rotate(-1.5deg); }
+.ticket:nth-child(3) { transform: translateX(-10px) rotate(1deg); }
+.ticket-zeit { color: var(--gold); font-weight: 700; font-size: 14px; }
+.ticket-titel { font-family: var(--anzeige); font-weight: 600; font-size: 21px; line-height: 1.2; }
+.ticket-art { color: var(--leise); font-size: 13px; }
+.beispiel { margin: 4px 0 0; text-align: right; font-size: 12px; color: var(--leise); opacity: 0.8; }
+
+.zaehler {
+  justify-self: center; width: min(360px, 86vw);
+  display: grid; justify-items: center; gap: 8px; text-align: center;
+  padding: 34px 24px 20px; border-radius: 28px;
+  background: linear-gradient(135deg, var(--samt), var(--samt-hell));
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.85);
+}
+.zaehler-klein { font-size: 15px; }
+.zaehler-zahl { font-family: var(--anzeige); font-weight: 900; font-style: italic; font-size: 32px; line-height: 1.12; }
+.zaehler-meilenstein { margin-top: 6px; padding: 6px 14px; border-radius: 999px; background: rgba(42, 15, 24, 0.4); font-weight: 700; font-size: 15px; }
+.zaehler .beispiel { color: var(--text); }
+
+/* ---------- Versprechen ---------- */
+.versprechen { max-width: var(--breite); margin: 0 auto; padding: 24px 20px 40px; }
+.versprechen ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border-radius: 24px; overflow: hidden; background: var(--rand); }
+.versprechen li.breit { grid-column: 1 / -1; }
+.versprechen li { padding: 22px; background: var(--grund); color: var(--leise); }
+.versprechen strong { display: block; margin-bottom: 4px; color: var(--text); font-family: var(--anzeige); font-weight: 600; font-size: 21px; }
+
+/* ---------- Schluss ---------- */
+.schluss { max-width: 900px; margin: 0 auto; padding: 60px 20px 90px; text-align: center; display: grid; justify-items: center; gap: 30px; }
+.schluss h2 { margin: 0; font-family: var(--anzeige); font-weight: 900; font-style: italic; font-size: clamp(34px, 7vw, 64px); line-height: 1.04; text-wrap: balance; }
+.schluss .gold-wort { white-space: normal; }
+
+/* ---------- Fuß ---------- */
+.fuss {
+  max-width: var(--breite); margin: 0 auto; padding: 32px 20px 48px;
+  display: grid; justify-items: center; gap: 12px; text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.07); color: var(--leise); font-size: 14px;
+}
+.fuss img { height: 24px; width: auto; }
+.fuss nav { display: flex; gap: 8px; }
+.fuss nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; }
+.fuss p { margin: 0; }
+
+/* ---------- Rechtstexte ---------- */
+.text { max-width: 720px; margin: 0 auto; padding: 16px 20px 72px; }
+.text h1 { font-size: clamp(30px, 8vw, 52px); margin: 18px 0 12px; hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; }
+.text h1 ~ h1 { margin-top: 56px; }
+.text h1 + h2 { margin-top: 12px; }
+.text h2 { font-family: var(--anzeige); font-weight: 600; font-size: 22px; line-height: 1.25; margin: 34px 0 8px; }
+.text p, .text li { color: var(--leise); }
+.text strong { color: var(--text); }
+.zurueck { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+
+/* ---------- Breite Bildschirme ---------- */
+@media (min-width: 900px) {
+  .leiste { padding: 18px 32px; }
+  .buehne {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    align-items: center; gap: 64px;
+    padding: 40px 32px 90px; min-height: calc(100vh - 80px);
+  }
+  .demo-spalten { grid-template-columns: 1.35fr 1fr; gap: 26px; align-items: start; }
+  .demo-schatz { position: static; width: auto; max-width: none; transform: none; padding-top: 0; }
+  .demo-schatz .demo-name { display: block; }
+  .stapel { height: 430px; }
+  .idee-emoji { font-size: 56px; }
+  .idee-titel { font-size: 25px; }
+  .wende { aspect-ratio: auto; height: 430px; }
+  .monogramm { font-size: 76px; }
+  .wende-hinweis { font-size: 14px; }
+  .antwort-zeichen { font-size: 56px; }
+  .antwort-text { font-size: 14px; }
+  /* Knöpfe mittig unter deiner Karte (erste Spalte) */
+  .demo-knoepfe { width: calc((100% - 26px) * 1.35 / 2.35); }
+  .demo-fuss { text-align: left; margin-left: 0; }
+  .warteliste-karte { padding: 44px 48px; }
+  .kapitel { padding: 60px 32px 24px; }
+  .zeile { grid-template-columns: 280px 1fr; gap: 80px; padding: 40px 0 64px; }
+  .zeile .handy { width: 260px; }
+  .zeile-gedreht { grid-template-columns: 1fr 340px; }
+  .zeile-gedreht > :first-child { order: 2; }
+  .versprechen ul { grid-template-columns: 1.3fr 1fr 1fr 1.3fr; }
+  .versprechen li.breit { grid-column: auto; }
+  .versprechen li { padding: 30px 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+/* Match-Moment: Fläche blendet auf, der Goldpunkt springt wie im Logo hinein */
+@media (prefers-reduced-motion: no-preference) {
+  .match.los { animation: aufblenden 0.35s var(--weich) both; }
+  .match.los .match-emoji { animation: hinein 0.55s var(--federnd) 0.1s both; }
+  .match.los .match-zeile { animation: hochgleiten 0.5s var(--weich) 0.15s both; }
+  .match.los .match-punkt { animation: punkt 0.5s var(--federnd) 0.55s both; }
+  .match.los .match-idee, .match.los .match-klein { animation: hochgleiten 0.5s var(--weich) 0.35s both; }
+  .match.los .knopf, .match.los .leise-knopf { animation: hochgleiten 0.5s var(--weich) 0.5s both; }
+}
+@keyframes aufblenden { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes hinein { from { opacity: 0; transform: scale(0.4) rotate(-12deg); } to { opacity: 1; transform: none; } }
+@keyframes hochgleiten { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes punkt { from { transform: scale(0); } to { transform: scale(1); } }
+.challenges .beispiel { position: absolute; left: 4px; bottom: 12px; margin: 0; }
